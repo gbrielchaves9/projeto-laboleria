@@ -1,12 +1,6 @@
-import pkg from 'pg';
-import dotenv from 'dotenv';
+import pool from '../database/database.js';
 
-dotenv.config();
-const { Pool } = pkg;
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-});
 
 export const create = async (cake) => {
     const client = await pool.connect();
