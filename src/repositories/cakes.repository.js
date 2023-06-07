@@ -1,13 +1,10 @@
 import pool from '../database/database.js';
 
-
-
-export const create = async (cake) => {
-    const client = await pool.connect();
-    try {
-        const res = await client.query('INSERT INTO cakes(name, price, image, description) VALUES($1, $2, $3, $4) RETURNING *', [cake.name, cake.price, cake.image, cake.description]);
-        return res.rows[0];
-    } finally {
-        client.release();
-    }
+const create = async (cake) => {
+  const query = 'INSERT INTO cakes (name, price, image, description) VALUES ($1, $2, $3, $4) RETURNING *';
+  const values = [cake.name, cake.price, cake.image, cake.description];
+  const result = await pool.query(query, values);
+  return result.rows[0];
 };
+
+export { create };

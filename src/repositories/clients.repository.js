@@ -1,11 +1,10 @@
 import pool from '../database/database.js';
 
-export const create = async (client) => {
-    const clientDb = await pool.connect();
-    try {
-        const res = await clientDb.query('INSERT INTO clients(name, address, phone) VALUES($1, $2, $3) RETURNING *', [client.name, client.address, client.phone]);
-        return res.rows[0];
-    } finally {
-        clientDb.release();
-    }
+const createClient = async (client) => {
+  const query = 'INSERT INTO clients (name, address, phone) VALUES ($1, $2, $3) RETURNING *';
+  const result = await pool.query(query, [client.name, client.address, client.phone]);
+  return result.rows[0];
 };
+
+export { createClient };
+
