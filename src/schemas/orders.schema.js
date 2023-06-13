@@ -1,8 +1,10 @@
 import Joi from 'joi';
 
-export const orderSchema = Joi.object({
-  clientId: Joi.number().integer().required(),
-  cakeId: Joi.number().integer().required(),
-  quantity: Joi.number().integer().min(1).max(5).required(),
-  totalPrice: Joi.number().precision(2).greater(0).required()
+const createOrderSchema = Joi.object({
+  clientId: Joi.number().integer().positive().required(),
+  cakeId: Joi.number().integer().positive().required(),
+  quantity: Joi.number().integer().positive().max(4).required(),
+  totalPrice: Joi.number().positive().required(),
 });
+
+export { createOrderSchema };

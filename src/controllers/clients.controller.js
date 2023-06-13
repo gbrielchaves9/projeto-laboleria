@@ -1,10 +1,12 @@
-import * as ClientsRepository from '../repositories/clients.repository.js';
+import { createClient as createClientRepository } from '../repositories/clients.repository.js';
 
-export const create = async (req, res, next) => {
-    try {
-        const client = await ClientsRepository.createClient(req.body);
-        res.status(201).send();
-    } catch (error) {
-        next(error);
-    }
+export const createClient = async (req, res) => {
+  try {
+    const client = req.body;
+    const createdClient = await createClientRepository(client);
+    res.status(201).json(createdClient);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };

@@ -6,5 +6,10 @@ const createClient = async (client) => {
   return result.rows[0];
 };
 
-export { createClient };
+const findClientById = async (id) => {
+  const query = 'SELECT * FROM clients WHERE id = $1';
+  const result = await pool.query(query, [id]);
+  return result.rows[0];
+};
 
+export { createClient, findClientById };
