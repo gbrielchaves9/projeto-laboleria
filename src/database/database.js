@@ -1,11 +1,21 @@
-import pkg from 'pg';
-import dotenv from 'dotenv';
+import pg from "pg"
+import dotenv from "dotenv"
 
-dotenv.config();
-const { Pool } = pkg;
+dotenv.config()
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-});
+const { Pool } = pg
 
-export default pool;
+const configDatabase = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+}
+
+if (process.env.MODE === "prod") {
+  configDatabase.ssl = {
+    rejectUnauthorized: true // Certificado SSL deve ser válido em produção
+  }
+}
+
+export const db = new Pool(configDatabase);

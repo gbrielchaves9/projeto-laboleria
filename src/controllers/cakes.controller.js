@@ -1,16 +1,16 @@
-import { createCake as createCakeRepository, findCakeByName } from '../repositories/cakes.repository.js';
+import { checkCakeByName, insertCake } from '../repositories/cakes.repository.js';
+import cakesSchema from '../schemas/cakes.schema.js';
 
 export const createCake = async (req, res) => {
-  try {
-    const cake = req.body;
-    const existingCake = await findCakeByName(cake.name);
-    if (existingCake) {
-      return res.status(409).json({ error: 'Cake already exists' });
-    }
-    const createdCake = await createCakeRepository(cake);
-    res.status(201).json(createdCake);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  const { error } = cakesSchema.validate(req.body);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+
+  const { name, price, image, description } = req.body;
+  
+  const existingCake = await checkCakeByName(name);
+  if (existingCake) return res.status(409).json({ message: 'Bolo já existente' });
+  
+  await insertCake(name, price, image, description);
+  
+  res.status(201).end();
 };

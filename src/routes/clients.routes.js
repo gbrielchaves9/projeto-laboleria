@@ -1,10 +1,9 @@
 import express from 'express';
-import { createClient, getClientOrders } from '../controllers/clients.controller.js';
-import { createClientSchema } from '../middlewares/validation.middleware.js';
+import { createClient } from '../controllers/clients.controller.js';
 
 const router = express.Router();
 
-router.post('/', createClientSchema, createClient);
-router.get('/:id/orders', getClientOrders);
+router.post('/', createClient);
 
 export default router;
+

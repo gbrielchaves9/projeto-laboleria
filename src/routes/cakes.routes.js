@@ -1,10 +1,9 @@
+// src/routes/cakes.routes.js
 import express from 'express';
-import { createCake, getCakes } from '../controllers/cakes.controller.js';
-import { createCakeSchema } from '../middlewares/validation.middleware.js';
+import { createCake } from '../controllers/cakes.controller.js';
 
 const router = express.Router();
 
-router.post('/', createCakeSchema, createCake);
-router.get('/', getCakes);
+router.post('/', createCake);
 
 export default router;

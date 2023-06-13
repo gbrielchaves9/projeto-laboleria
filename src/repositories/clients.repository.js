@@ -1,15 +1,11 @@
-import pool from '../database/database.js';
+import { db } from '../database/database.js';
 
-const createClient = async (client) => {
-  const query = 'INSERT INTO clients (name, address, phone) VALUES ($1, $2, $3) RETURNING *';
-  const result = await pool.query(query, [client.name, client.address, client.phone]);
-  return result.rows[0];
+export const insertClient = async (name, address, phone) => {
+  const query = `
+    INSERT INTO clients (name, address, phone) 
+    VALUES ($1, $2, $3);
+  `;
+
+  await db.query(query, [name, address, phone]);
 };
 
-const findClientById = async (id) => {
-  const query = 'SELECT * FROM clients WHERE id = $1';
-  const result = await pool.query(query, [id]);
-  return result.rows[0];
-};
-
-export { createClient, findClientById };

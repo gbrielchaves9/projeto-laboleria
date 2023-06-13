@@ -1,9 +1,10 @@
-import Joi from 'joi';
+import joi from 'joi';
 
-const createClientSchema = Joi.object({
-  name: Joi.string().required(),
-  address: Joi.string().required(),
-  phone: Joi.string().pattern(/^\d{10,11}$/).required(),
+const clientsSchema = joi.object({
+  name: joi.string().required(),
+  address: joi.string().required(),
+  phone: joi.string().min(10).max(11).required()
 });
 
-export { createClientSchema };
+
+export default clientsSchema;

@@ -1,16 +1,15 @@
-import pool from '../database/database.js';
+// src/repositories/cakes.repository.js
+import { db } from "../database/database.js";
 
-const createCake = async (cake) => {
-  const query = 'INSERT INTO cakes (name, price, image, description) VALUES ($1, $2, $3, $4) RETURNING *';
-  const values = [cake.name, cake.price, cake.image, cake.description];
-  const result = await pool.query(query, values);
+export const checkCakeByName = async (name) => {
+  const query = 'SELECT * FROM cakes WHERE name = $1';
+  const result = await db.query(query, [name]);
   return result.rows[0];
 };
 
-const findCakeById = async (id) => {
-  const query = 'SELECT * FROM cakes WHERE id = $1';
-  const result = await pool.query(query, [id]);
-  return result.rows[0];
+export const insertCake = async (name, price, image, description) => {
+  const query = 'INSERT INTO cakes (name, price, image, description) VALUES ($1, $2, $3, $4)';
+  await db.query(query, [name, price, image, description]);
 };
 
-export { createCake, findCakeById };
+

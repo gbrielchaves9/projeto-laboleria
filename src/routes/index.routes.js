@@ -1,12 +1,10 @@
 import express from 'express';
-import cakesRoutes from './cakes.routes.js';
-import clientsRoutes from './clients.routes.js';
-import ordersRoutes from './orders.routes.js';
+import cakeRoutes from './cakes.routes.js';
+import clientRoutes from './clients.routes.js';
 
 const router = express.Router();
 
-router.use('/cakes', cakesRoutes);
-router.use('/clients', clientsRoutes);
-router.use('/orders', ordersRoutes);
+router.use('/cakes', cakeRoutes);
+router.use('/clients', clientRoutes);
 
 export default router;

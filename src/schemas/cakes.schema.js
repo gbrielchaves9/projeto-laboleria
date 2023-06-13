@@ -1,10 +1,13 @@
-import Joi from 'joi';
+import joi from 'joi';
 
-const createCakeSchema = Joi.object({
-  name: Joi.string().min(2).required(),
-  price: Joi.number().positive().required(),
-  image: Joi.string().uri().required(),
-  description: Joi.string().allow('').optional(),
+const cakesSchema = joi.object({
+  name: joi.string().min(2).required(),
+    price: joi.number().positive().required(),
+    image: joi.string().regex(/\.com/).required(),
+    description: joi.string()
 });
 
-export { createCakeSchema };
+export default cakesSchema;
+
+
+
